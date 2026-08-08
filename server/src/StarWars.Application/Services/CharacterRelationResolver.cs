@@ -5,10 +5,15 @@ namespace StarWars.Application.Services;
 
 public class CharacterRelationResolver(ISwapiClient swapiClient)
 {
+    // SWAPI leaves a character's species array empty when they're Human — Human is
+    // the upstream API's implicit default rather than an explicit species entry.
+    // Relative so it still resolves correctly if Swapi:BaseUrl is ever reconfigured.
+    private const string DefaultHumanSpeciesUrl = "species/1/";
+
     public async Task<CharacterRelatedResources> ResolveAsync(SwapiPerson person)
     {
         var homeworldTask = ResolveHomeworldAsync(person.Homeworld);
-        var speciesTask = ResolveAllAsync<SwapiSpecies>(person.Species);
+        var speciesTask = ResolveAllAsync<SwapiSpecies>(SpeciesUrlsOrHumanDefault(person));
         var filmsTask = ResolveAllAsync<SwapiFilm>(person.Films);
         var starshipsTask = ResolveAllAsync<SwapiStarship>(person.Starships);
         var vehiclesTask = ResolveAllAsync<SwapiVehicle>(person.Vehicles);
@@ -22,6 +27,9 @@ public class CharacterRelationResolver(ISwapiClient swapiClient)
             await starshipsTask,
             await vehiclesTask);
     }
+
+    private static IReadOnlyList<string> SpeciesUrlsOrHumanDefault(SwapiPerson person) =>
+        person.Species.Length > 0 ? person.Species : [DefaultHumanSpeciesUrl];
 
     private async Task<SwapiPlanet?> ResolveHomeworldAsync(string url) =>
         string.IsNullOrEmpty(url) ? null : await swapiClient.GetByUrlAsync<SwapiPlanet>(url);

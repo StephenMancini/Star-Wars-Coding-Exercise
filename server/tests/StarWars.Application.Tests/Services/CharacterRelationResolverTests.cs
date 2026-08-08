@@ -99,17 +99,30 @@ public class CharacterRelationResolverTests
     }
 
     [Fact]
-    public async Task ResolveAsync_ReturnsNullHomeworldAndEmptyCollections_WhenPersonHasNoRelatedUrls()
+    public async Task ResolveAsync_ReturnsNullHomeworldAndEmptyFilmsStarshipsVehicles_WhenPersonHasNoRelatedUrls()
     {
         var person = new SwapiPerson { Name = "Unknown", Homeworld = "", Url = "https://swapi.info/api/people/99/" };
 
         var result = await _sut.ResolveAsync(person);
 
         result.Homeworld.Should().BeNull();
-        result.Species.Should().BeEmpty();
         result.Films.Should().BeEmpty();
         result.Starships.Should().BeEmpty();
         result.Vehicles.Should().BeEmpty();
         _swapiClient.Verify(c => c.GetByUrlAsync<SwapiPlanet>(It.IsAny<string>()), Times.Never);
+    }
+
+    [Fact]
+    public async Task ResolveAsync_DefaultsToHumanSpecies_WhenPersonHasNoExplicitSpecies()
+    {
+        var person = MakePerson();
+        person.Species = [];
+        _swapiClient.Setup(c => c.GetByUrlAsync<SwapiSpecies>("species/1/"))
+            .ReturnsAsync(new SwapiSpecies { Name = "Human" });
+
+        var result = await _sut.ResolveAsync(person);
+
+        result.Species.Should().ContainSingle(s => s.Name == "Human");
+        _swapiClient.Verify(c => c.GetByUrlAsync<SwapiSpecies>("species/1/"), Times.Once);
     }
 }
