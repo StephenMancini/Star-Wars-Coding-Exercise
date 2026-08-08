@@ -1,3 +1,5 @@
+import styles from './CharacterListItem.module.css'
+
 interface CharacterListItemProps {
   id: number
   name: string
@@ -8,7 +10,12 @@ interface CharacterListItemProps {
 export function CharacterListItem({ id, name, isSelected, onSelect }: CharacterListItemProps) {
   return (
     <li>
-      <button type="button" aria-pressed={isSelected} onClick={() => onSelect(id)}>
+      <button
+        type="button"
+        aria-pressed={isSelected}
+        className={isSelected ? `${styles.button} ${styles.selected}` : styles.button}
+        onClick={() => onSelect(id)}
+      >
         {name}
       </button>
     </li>

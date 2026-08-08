@@ -1,5 +1,6 @@
 import type { CharacterSummary } from '../../../api/types'
 import { CharacterListItem } from './CharacterListItem'
+import styles from './CharacterList.module.css'
 
 interface CharacterListProps {
   characters: CharacterSummary[]
@@ -9,7 +10,7 @@ interface CharacterListProps {
 
 export function CharacterList({ characters, selectedId, onSelectCharacter }: CharacterListProps) {
   return (
-    <ul>
+    <ul className={styles.list}>
       {characters.map((character) => (
         <CharacterListItem
           key={character.id}
