@@ -1,4 +1,5 @@
 import type { CharacterAttributes } from '../../../api/types'
+import styles from './InfoCard.module.css'
 
 interface AttributesCardProps {
   attributes: CharacterAttributes
@@ -6,23 +7,37 @@ interface AttributesCardProps {
 
 export function AttributesCard({ attributes }: AttributesCardProps) {
   return (
-    <section aria-label="Attributes">
-      <h2>Attributes</h2>
-      <dl>
-        <dt>Height</dt>
-        <dd>{attributes.height}</dd>
-        <dt>Mass</dt>
-        <dd>{attributes.mass}</dd>
-        <dt>Hair Color</dt>
-        <dd>{attributes.hairColor}</dd>
-        <dt>Skin Color</dt>
-        <dd>{attributes.skinColor}</dd>
-        <dt>Eye Color</dt>
-        <dd>{attributes.eyeColor}</dd>
-        <dt>Birth Year</dt>
-        <dd>{attributes.birthYear}</dd>
-        <dt>Gender</dt>
-        <dd>{attributes.gender}</dd>
+    <section>
+      <h2 className={styles.sectionLabel}>Attributes</h2>
+      <dl className={`${styles.card} ${styles.rows}`}>
+        <div className={styles.row}>
+          <dt>Height</dt>
+          <dd>{attributes.height}</dd>
+        </div>
+        <div className={styles.row}>
+          <dt>Mass</dt>
+          <dd>{attributes.mass}</dd>
+        </div>
+        <div className={styles.row}>
+          <dt>Hair Color</dt>
+          <dd>{attributes.hairColor}</dd>
+        </div>
+        <div className={styles.row}>
+          <dt>Skin Color</dt>
+          <dd>{attributes.skinColor}</dd>
+        </div>
+        <div className={styles.row}>
+          <dt>Eye Color</dt>
+          <dd>{attributes.eyeColor}</dd>
+        </div>
+        <div className={styles.row}>
+          <dt>Birth Year</dt>
+          <dd>{attributes.birthYear}</dd>
+        </div>
+        <div className={styles.row}>
+          <dt>Gender</dt>
+          <dd>{attributes.gender}</dd>
+        </div>
       </dl>
     </section>
   )

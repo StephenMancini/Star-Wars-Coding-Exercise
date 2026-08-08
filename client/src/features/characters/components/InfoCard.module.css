@@ -1,0 +1,60 @@
+.sectionLabel {
+  composes: sectionLabel from '../../../styles/shared.module.css';
+}
+
+.card {
+  composes: card from '../../../styles/shared.module.css';
+  padding: var(--space-3) var(--space-4);
+}
+
+.title {
+  margin: 0 0 var(--space-3);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-heading);
+}
+
+.rows {
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.row dt {
+  color: var(--color-text-muted);
+}
+
+.row dd {
+  margin: 0;
+  font-weight: 500;
+  text-align: right;
+}
+
+.inlineRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+  font-size: 0.875rem;
+}
+
+.inlineRow dt {
+  color: var(--color-text-muted);
+}
+
+.inlineRow dd {
+  margin: 0;
+  text-align: right;
+}
