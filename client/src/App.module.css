@@ -1,0 +1,12 @@
+.page {
+  min-height: 100svh;
+  background: var(--color-page-bg);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  align-items: start;
+  gap: var(--space-5);
+  padding: var(--space-5);
+}

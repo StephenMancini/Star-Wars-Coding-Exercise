@@ -1,0 +1,15 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  composes: sectionLabel from '../../../styles/shared.module.css';
+}
+
+.listBox {
+  composes: card from '../../../styles/shared.module.css';
+  max-height: 460px;
+  overflow-y: auto;
+  padding: var(--space-2) 0;
+}

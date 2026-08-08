@@ -6,7 +6,10 @@ import { server } from './test/mocks/server'
 import type { CharacterDetail, CharacterSummary } from './api/types'
 import App from './App'
 
-const summaries: CharacterSummary[] = [{ id: 1, name: 'Luke Skywalker' }]
+const summaries: CharacterSummary[] = [
+  { id: 1, name: 'Luke Skywalker' },
+  { id: 2, name: 'Leia Organa' },
+]
 const detail: CharacterDetail = {
   id: 1,
   name: 'Luke Skywalker',
@@ -45,5 +48,27 @@ describe('App', () => {
       expect(screen.getByRole('heading', { name: 'Luke Skywalker' })).toBeInTheDocument(),
     )
     expect(screen.getByText('172')).toBeInTheDocument()
+  })
+
+  it('filters the character list from the header search box, with a single network call', async () => {
+    let callCount = 0
+    server.use(
+      http.get('/api/characters', () => {
+        callCount++
+        return HttpResponse.json(summaries)
+      }),
+    )
+    const user = userEvent.setup()
+
+    render(<App />)
+
+    await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
+    expect(screen.getByText('Leia Organa')).toBeInTheDocument()
+
+    await user.type(screen.getByRole('searchbox'), 'Leia')
+
+    expect(screen.getByText('Leia Organa')).toBeInTheDocument()
+    expect(screen.queryByText('Luke Skywalker')).not.toBeInTheDocument()
+    expect(callCount).toBe(1)
   })
 })

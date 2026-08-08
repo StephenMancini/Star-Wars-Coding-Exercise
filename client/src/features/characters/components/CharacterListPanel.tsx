@@ -1,17 +1,17 @@
-import { useState } from 'react'
 import { AsyncStateView } from '../../../components/AsyncStateView'
+import { EmptyState } from '../../../components/EmptyState'
 import type { CharacterSummary } from '../../../api/types'
 import { useCharacterList } from '../hooks/useCharacterList'
 import { CharacterList } from './CharacterList'
-import { SearchBox } from './SearchBox'
+import styles from './CharacterListPanel.module.css'
 
 interface CharacterListPanelProps {
+  query: string
   selectedId: number | null
   onSelectCharacter: (id: number) => void
 }
 
-export function CharacterListPanel({ selectedId, onSelectCharacter }: CharacterListPanelProps) {
-  const [query, setQuery] = useState('')
+export function CharacterListPanel({ query, selectedId, onSelectCharacter }: CharacterListPanelProps) {
   const state = useCharacterList()
 
   const renderCharacters = (characters: CharacterSummary[]) => {
@@ -20,7 +20,7 @@ export function CharacterListPanel({ selectedId, onSelectCharacter }: CharacterL
     )
 
     if (filtered.length === 0) {
-      return <p>No characters match your search.</p>
+      return <EmptyState message="No characters match your search." />
     }
 
     return (
@@ -29,9 +29,11 @@ export function CharacterListPanel({ selectedId, onSelectCharacter }: CharacterL
   }
 
   return (
-    <div>
-      <SearchBox value={query} onChange={setQuery} placeholder="Search characters..." />
-      <AsyncStateView state={state} onSuccess={renderCharacters} />
-    </div>
+    <section className={styles.panel}>
+      <h2 className={styles.label}>Characters</h2>
+      <div className={styles.listBox}>
+        <AsyncStateView state={state} onSuccess={renderCharacters} />
+      </div>
+    </section>
   )
 }
