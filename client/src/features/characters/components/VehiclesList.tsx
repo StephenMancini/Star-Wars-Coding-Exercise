@@ -1,23 +1,41 @@
 import { EmptyState } from '../../../components/EmptyState'
+import { NoImageIcon } from '../../../components/icons/NoImageIcon'
 import type { Vehicle } from '../../../api/types'
+import styles from './VehicleRow.module.css'
 
 interface VehiclesListProps {
   vehicles: Vehicle[]
 }
 
 export function VehiclesList({ vehicles }: VehiclesListProps) {
-  if (vehicles.length === 0) {
-    return <EmptyState message="No vehicles" />
-  }
-
   return (
-    <ul aria-label="Vehicles">
-      {vehicles.map((vehicle) => (
-        <li key={vehicle.name}>
-          <strong>{vehicle.name}</strong> — {vehicle.vehicleClass}, {vehicle.model} (
-          {vehicle.manufacturer}), crew {vehicle.crew}, passengers {vehicle.passengers}
-        </li>
-      ))}
-    </ul>
+    <section>
+      <h2 className={styles.sectionLabel}>Vehicles</h2>
+      {vehicles.length === 0 ? (
+        <EmptyState message="No vehicles" />
+      ) : (
+        <ul className={styles.list}>
+          {vehicles.map((vehicle) => (
+            <li key={vehicle.name} className={styles.row}>
+              <span className={styles.icon}>
+                <NoImageIcon />
+              </span>
+              <div className={styles.info}>
+                <p className={styles.nameLine}>
+                  <strong>{vehicle.name}</strong>
+                  <span>{vehicle.vehicleClass}</span>
+                </p>
+                <p className={styles.metaLine}>
+                  Crew / Passengers: {vehicle.crew} / {vehicle.passengers}
+                </p>
+                <p className={styles.metaLine}>
+                  Model / Manufacturer: {vehicle.model} / {vehicle.manufacturer}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   )
 }
