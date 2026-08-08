@@ -1,23 +1,56 @@
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
+using StarWars.Application.Abstractions;
+using StarWars.Application.Caching;
+using StarWars.Application.Infrastructure;
+using StarWars.Application.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+const string CorsPolicyName = "AllowClient";
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddProblemDetails();
+
+builder.Services.AddMemoryCache();
+builder.Services.Configure<SwapiCacheOptions>(builder.Configuration.GetSection(SwapiCacheOptions.SectionName));
+
+builder.Services.AddHttpClient<HttpSwapiClient>(client =>
+{
+    var baseUrl = builder.Configuration["Swapi:BaseUrl"] ?? "https://swapi.info/api/";
+    client.BaseAddress = new Uri(baseUrl);
+});
+
+builder.Services.AddScoped<ISwapiClient>(sp => new CachingSwapiClient(
+    sp.GetRequiredService<HttpSwapiClient>(),
+    sp.GetRequiredService<IMemoryCache>(),
+    sp.GetRequiredService<IOptions<SwapiCacheOptions>>()));
+
+builder.Services.AddScoped<CharacterRelationResolver>();
+builder.Services.AddScoped<ICharacterService, CharacterService>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(CorsPolicyName, policy =>
+    {
+        var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+        policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseExceptionHandler();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
+app.UseCors(CorsPolicyName);
 app.MapControllers();
 
 app.Run();
+
+public partial class Program;
