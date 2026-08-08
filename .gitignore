@@ -1,0 +1,21 @@
+# --- Node / client ---
+node_modules/
+client/dist/
+client/coverage/
+*.local
+
+# --- .NET / server ---
+server/**/bin/
+server/**/obj/
+*.user
+
+# --- Editors / OS ---
+.vs/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+
+# --- Logs ---
+*.log
+npm-debug.log*
