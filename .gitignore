@@ -7,6 +7,8 @@ client/coverage/
 # --- .NET / server ---
 server/**/bin/
 server/**/obj/
+server/**/TestResults/
+server/coverage-report/
 *.user
 
 # --- Editors / OS ---

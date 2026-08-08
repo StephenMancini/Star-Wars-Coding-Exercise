@@ -8,7 +8,8 @@
     "dev:client": "npm --prefix client run dev",
     "test": "npm --prefix client test && dotnet test server/StarWars.sln",
     "test:client": "npm --prefix client test",
-    "test:server": "dotnet test server/StarWars.sln"
+    "test:server": "dotnet test server/StarWars.sln",
+    "test:coverage": "npm --prefix client run test:coverage && dotnet test server/StarWars.sln --collect:\"XPlat Code Coverage\""
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
