@@ -23,4 +23,19 @@ describe('FilmsStrip', () => {
 
     expect(screen.getByText(/no films/i)).toBeInTheDocument()
   })
+
+  it('sorts films by episode number ascending, regardless of input order', () => {
+    const films: Film[] = [
+      { title: 'Revenge of the Sith', episodeId: 3 },
+      { title: 'A New Hope', episodeId: 4 },
+      { title: 'The Phantom Menace', episodeId: 1 },
+    ]
+
+    render(<FilmsStrip films={films} />)
+
+    const titles = screen.getAllByRole('listitem').map((item) => item.textContent)
+    expect(titles[0]).toContain('The Phantom Menace')
+    expect(titles[1]).toContain('Revenge of the Sith')
+    expect(titles[2]).toContain('A New Hope')
+  })
 })
