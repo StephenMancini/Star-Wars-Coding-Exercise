@@ -1,6 +1,8 @@
+@import './styles/tokens.css';
+
 :root {
-  color-scheme: light dark;
-  font: 16px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light;
+  font: 15px/1.5 var(--font-sans);
 }
 
 * {
@@ -9,6 +11,8 @@
 
 body {
   margin: 0;
+  background: var(--color-page-bg);
+  color: var(--color-text);
 }
 
 #root {
