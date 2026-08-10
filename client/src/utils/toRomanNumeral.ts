@@ -1,29 +1,7 @@
-const ROMAN_NUMERALS: [number, string][] = [
-  [1000, 'M'],
-  [900, 'CM'],
-  [500, 'D'],
-  [400, 'CD'],
-  [100, 'C'],
-  [90, 'XC'],
-  [50, 'L'],
-  [40, 'XL'],
-  [10, 'X'],
-  [9, 'IX'],
-  [5, 'V'],
-  [4, 'IV'],
-  [1, 'I'],
-]
+// Scoped to the 9 mainline Star Wars episode numbers rather than being a general-purpose
+// converter — that's the only range this app ever needs to display.
+const EPISODE_NUMERALS = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX']
 
-export function toRomanNumeral(num: number): string {
-  let result = ''
-  let remaining = num
-
-  for (const [value, symbol] of ROMAN_NUMERALS) {
-    while (remaining >= value) {
-      result += symbol
-      remaining -= value
-    }
-  }
-
-  return result
+export function toRomanNumeral(episodeId: number): string {
+  return EPISODE_NUMERALS[episodeId]
 }
