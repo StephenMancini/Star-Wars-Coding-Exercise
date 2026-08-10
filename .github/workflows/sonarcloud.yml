@@ -1,0 +1,69 @@
+name: SonarCloud
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  analyze:
+    name: Test and analyze
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install SonarScanner for .NET
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Install frontend dependencies
+        run: npm ci
+        working-directory: client
+
+      - name: Frontend tests with coverage
+        run: npm run test:coverage
+        working-directory: client
+
+      - name: Begin SonarCloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: >
+          dotnet sonarscanner begin
+          /k:"SONAR_PROJECT_KEY_PLACEHOLDER"
+          /o:"SONAR_ORG_KEY_PLACEHOLDER"
+          /d:sonar.host.url="https://sonarcloud.io"
+          /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          /d:sonar.cs.opencover.reportsPaths="server/tests/**/coverage.opencover.xml"
+          /d:sonar.javascript.lcov.reportPaths="client/coverage/lcov.info"
+          /d:sonar.exclusions="client/node_modules/**,client/dist/**,client/coverage/**,server/**/bin/**,server/**/obj/**"
+          /d:sonar.sources="client/src,server/src"
+          /d:sonar.tests="server/tests"
+          /d:sonar.test.inclusions="**/*.test.ts,**/*.test.tsx"
+
+      - name: Restore and build backend
+        run: |
+          dotnet restore StarWars.sln
+          dotnet build StarWars.sln --no-restore
+        working-directory: server
+
+      - name: Backend tests with coverage
+        run: dotnet test StarWars.sln --no-build --collect:"XPlat Code Coverage" --settings coverlet.runsettings
+        working-directory: server
+
+      - name: End SonarCloud analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

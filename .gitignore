@@ -9,6 +9,7 @@ server/**/bin/
 server/**/obj/
 server/**/TestResults/
 server/coverage-report/
+.sonarqube/
 *.user
 
 # --- Editors / OS ---
