@@ -30,7 +30,7 @@ jobs:
         run: dotnet tool install --global dotnet-sonarscanner
 
       - name: Install frontend dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
         working-directory: client
 
       - name: Frontend tests with coverage
@@ -45,7 +45,7 @@ jobs:
           /k:"StephenMancini_Star-Wars-Coding-Exercise"
           /o:"stephenmancini"
           /d:sonar.host.url="https://sonarcloud.io"
-          /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          /d:sonar.token="$SONAR_TOKEN"
           /d:sonar.cs.opencover.reportsPaths="server/tests/**/coverage.opencover.xml"
           /d:sonar.javascript.lcov.reportPaths="client/coverage/lcov.info"
           /d:sonar.exclusions="client/node_modules/**,client/dist/**,client/coverage/**,server/**/bin/**,server/**/obj/**"
@@ -64,4 +64,4 @@ jobs:
       - name: End SonarCloud analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+        run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"
