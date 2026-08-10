@@ -42,8 +42,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: >
           dotnet sonarscanner begin
-          /k:"SONAR_PROJECT_KEY_PLACEHOLDER"
-          /o:"SONAR_ORG_KEY_PLACEHOLDER"
+          /k:"StephenMancini_Star-Wars-Coding-Exercise"
+          /o:"stephenmancini"
           /d:sonar.host.url="https://sonarcloud.io"
           /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
           /d:sonar.cs.opencover.reportsPaths="server/tests/**/coverage.opencover.xml"
