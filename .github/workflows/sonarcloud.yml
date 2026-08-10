@@ -55,13 +55,11 @@ jobs:
 
       - name: Restore and build backend
         run: |
-          dotnet restore StarWars.sln
-          dotnet build StarWars.sln --no-restore
-        working-directory: server
+          dotnet restore server/StarWars.sln
+          dotnet build server/StarWars.sln --no-restore
 
       - name: Backend tests with coverage
-        run: dotnet test StarWars.sln --no-build --collect:"XPlat Code Coverage" --settings coverlet.runsettings
-        working-directory: server
+        run: dotnet test server/StarWars.sln --no-build --collect:"XPlat Code Coverage" --settings server/coverlet.runsettings
 
       - name: End SonarCloud analysis
         env:
