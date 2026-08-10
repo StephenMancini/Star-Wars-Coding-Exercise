@@ -49,8 +49,6 @@ jobs:
           /d:sonar.cs.opencover.reportsPaths="server/tests/**/coverage.opencover.xml"
           /d:sonar.javascript.lcov.reportPaths="client/coverage/lcov.info"
           /d:sonar.exclusions="client/node_modules/**,client/dist/**,client/coverage/**,server/**/bin/**,server/**/obj/**"
-          /d:sonar.sources="client/src,server/src"
-          /d:sonar.tests="server/tests"
           /d:sonar.test.inclusions="**/*.test.ts,**/*.test.tsx"
 
       - name: Restore and build backend
