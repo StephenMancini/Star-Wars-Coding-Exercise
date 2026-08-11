@@ -28,7 +28,7 @@ public class CharacterRelationResolver(ISwapiClient swapiClient)
             await vehiclesTask);
     }
 
-    private static IReadOnlyList<string> SpeciesUrlsOrHumanDefault(SwapiPerson person) =>
+    private static string[] SpeciesUrlsOrHumanDefault(SwapiPerson person) =>
         person.Species.Length > 0 ? person.Species : [DefaultHumanSpeciesUrl];
 
     private async Task<SwapiPlanet?> ResolveHomeworldAsync(string url) =>
