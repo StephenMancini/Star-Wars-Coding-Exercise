@@ -3,7 +3,7 @@ import type { Species } from '../../../api/types'
 import styles from './InfoCard.module.css'
 
 interface SpeciesCardProps {
-  species: Species | null
+  readonly species: Species | null
 }
 
 export function SpeciesCard({ species }: SpeciesCardProps) {

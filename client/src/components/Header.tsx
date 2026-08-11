@@ -2,8 +2,8 @@ import { SearchBox } from '../features/characters/components/SearchBox'
 import styles from './Header.module.css'
 
 interface HeaderProps {
-  query: string
-  onQueryChange: (query: string) => void
+  readonly query: string
+  readonly onQueryChange: (query: string) => void
 }
 
 export function Header({ query, onQueryChange }: HeaderProps) {

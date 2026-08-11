@@ -4,7 +4,7 @@ import type { Vehicle } from '../../../api/types'
 import styles from './VehicleRow.module.css'
 
 interface VehiclesListProps {
-  vehicles: Vehicle[]
+  readonly vehicles: Vehicle[]
 }
 
 export function VehiclesList({ vehicles }: VehiclesListProps) {

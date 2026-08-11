@@ -3,9 +3,9 @@ import { CharacterListItem } from './CharacterListItem'
 import styles from './CharacterList.module.css'
 
 interface CharacterListProps {
-  characters: CharacterSummary[]
-  selectedId: number | null
-  onSelectCharacter: (id: number) => void
+  readonly characters: CharacterSummary[]
+  readonly selectedId: number | null
+  readonly onSelectCharacter: (id: number) => void
 }
 
 export function CharacterList({ characters, selectedId, onSelectCharacter }: CharacterListProps) {

@@ -1,10 +1,10 @@
 import styles from './CharacterListItem.module.css'
 
 interface CharacterListItemProps {
-  id: number
-  name: string
-  isSelected: boolean
-  onSelect: (id: number) => void
+  readonly id: number
+  readonly name: string
+  readonly isSelected: boolean
+  readonly onSelect: (id: number) => void
 }
 
 export function CharacterListItem({ id, name, isSelected, onSelect }: CharacterListItemProps) {

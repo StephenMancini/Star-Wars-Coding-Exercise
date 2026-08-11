@@ -5,7 +5,7 @@ import { toRomanNumeral } from '../../../utils/toRomanNumeral'
 import styles from './FilmsStrip.module.css'
 
 interface FilmsStripProps {
-  films: Film[]
+  readonly films: Film[]
 }
 
 export function FilmsStrip({ films }: FilmsStripProps) {

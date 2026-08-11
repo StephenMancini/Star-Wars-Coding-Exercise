@@ -4,7 +4,7 @@ import type { Starship } from '../../../api/types'
 import styles from './VehicleRow.module.css'
 
 interface StarshipsListProps {
-  starships: Starship[]
+  readonly starships: Starship[]
 }
 
 export function StarshipsList({ starships }: StarshipsListProps) {

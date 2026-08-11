@@ -1,9 +1,9 @@
 import styles from './SearchBox.module.css'
 
 interface SearchBoxProps {
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
+  readonly value: string
+  readonly onChange: (value: string) => void
+  readonly placeholder?: string
 }
 
 export function SearchBox({ value, onChange, placeholder }: SearchBoxProps) {

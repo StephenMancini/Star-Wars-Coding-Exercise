@@ -12,7 +12,7 @@ import { StarshipsList } from './StarshipsList'
 import { VehiclesList } from './VehiclesList'
 
 interface CharacterDetailPanelProps {
-  selectedId: number | null
+  readonly selectedId: number | null
 }
 
 function renderDetail(detail: CharacterDetail) {
@@ -54,7 +54,7 @@ export function CharacterDetailPanel({ selectedId }: CharacterDetailPanelProps) 
       }
       loadingFallback={
         <div className={styles.placeholder}>
-          <p role="status">Loading…</p>
+          <output>Loading…</output>
         </div>
       }
       errorFallback={

@@ -6,9 +6,9 @@ import { CharacterList } from './CharacterList'
 import styles from './CharacterListPanel.module.css'
 
 interface CharacterListPanelProps {
-  query: string
-  selectedId: number | null
-  onSelectCharacter: (id: number) => void
+  readonly query: string
+  readonly selectedId: number | null
+  readonly onSelectCharacter: (id: number) => void
 }
 
 export function CharacterListPanel({ query, selectedId, onSelectCharacter }: CharacterListPanelProps) {

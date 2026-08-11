@@ -2,11 +2,11 @@ import type { ReactNode } from 'react'
 import type { AsyncState } from '../hooks/useAsyncData'
 
 interface AsyncStateViewProps<T> {
-  state: AsyncState<T>
-  onSuccess: (data: T) => ReactNode
-  loadingFallback?: ReactNode
-  errorFallback?: ReactNode
-  emptyFallback?: ReactNode
+  readonly state: AsyncState<T>
+  readonly onSuccess: (data: T) => ReactNode
+  readonly loadingFallback?: ReactNode
+  readonly errorFallback?: ReactNode
+  readonly emptyFallback?: ReactNode
 }
 
 export function AsyncStateView<T>({
@@ -18,7 +18,7 @@ export function AsyncStateView<T>({
 }: AsyncStateViewProps<T>) {
   switch (state.status) {
     case 'loading':
-      return <>{loadingFallback ?? <p role="status">Loading…</p>}</>
+      return <>{loadingFallback ?? <output>Loading…</output>}</>
     case 'error':
       return <>{errorFallback ?? <p role="alert">Something went wrong.</p>}</>
     case 'empty':

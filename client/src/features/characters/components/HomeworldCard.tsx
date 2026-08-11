@@ -3,7 +3,7 @@ import type { Homeworld } from '../../../api/types'
 import styles from './InfoCard.module.css'
 
 interface HomeworldCardProps {
-  homeworld: Homeworld | null
+  readonly homeworld: Homeworld | null
 }
 
 export function HomeworldCard({ homeworld }: HomeworldCardProps) {

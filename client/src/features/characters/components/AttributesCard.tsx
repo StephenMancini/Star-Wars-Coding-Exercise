@@ -2,7 +2,7 @@ import type { CharacterAttributes } from '../../../api/types'
 import styles from './InfoCard.module.css'
 
 interface AttributesCardProps {
-  attributes: CharacterAttributes
+  readonly attributes: CharacterAttributes
 }
 
 export function AttributesCard({ attributes }: AttributesCardProps) {
