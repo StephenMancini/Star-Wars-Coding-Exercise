@@ -33,6 +33,14 @@ jobs:
         run: npm ci --ignore-scripts
         working-directory: client
 
+      - name: Frontend typecheck
+        run: npm run typecheck
+        working-directory: client
+
+      - name: Frontend lint
+        run: npm run lint
+        working-directory: client
+
       - name: Frontend tests with coverage
         run: npm run test:coverage
         working-directory: client
