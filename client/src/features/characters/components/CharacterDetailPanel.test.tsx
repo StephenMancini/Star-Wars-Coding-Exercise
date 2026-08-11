@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { describe, expect, it } from 'vitest'
 import { server } from '../../../test/mocks/server'
@@ -38,9 +38,7 @@ describe('CharacterDetailPanel', () => {
 
     expect(screen.getByRole('status')).toBeInTheDocument()
 
-    await waitFor(() =>
-      expect(screen.getByRole('heading', { name: 'Luke Skywalker' })).toBeInTheDocument(),
-    )
+    expect(await screen.findByRole('heading', { name: 'Luke Skywalker' })).toBeInTheDocument()
     expect(screen.getByText('172')).toBeInTheDocument()
   })
 
@@ -49,6 +47,6 @@ describe('CharacterDetailPanel', () => {
 
     render(<CharacterDetailPanel selectedId={1} />)
 
-    await waitFor(() => expect(screen.getByRole('alert')).toBeInTheDocument())
+    expect(await screen.findByRole('alert')).toBeInTheDocument()
   })
 })

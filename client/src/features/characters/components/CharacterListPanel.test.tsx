@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { http, HttpResponse } from 'msw'
 import { describe, expect, it } from 'vitest'
 import { server } from '../../../test/mocks/server'
@@ -17,7 +17,7 @@ describe('CharacterListPanel', () => {
 
     render(<CharacterListPanel query="" selectedId={null} onSelectCharacter={() => {}} />)
 
-    await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
+    expect(await screen.findByText('Luke Skywalker')).toBeInTheDocument()
     expect(screen.getByText('Leia Organa')).toBeInTheDocument()
   })
 
@@ -36,7 +36,7 @@ describe('CharacterListPanel', () => {
     const { rerender } = render(
       <CharacterListPanel query="" selectedId={null} onSelectCharacter={() => {}} />,
     )
-    await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
+    expect(await screen.findByText('Luke Skywalker')).toBeInTheDocument()
 
     rerender(<CharacterListPanel query="Leia" selectedId={null} onSelectCharacter={() => {}} />)
 
@@ -50,7 +50,7 @@ describe('CharacterListPanel', () => {
 
     render(<CharacterListPanel query="Zzz" selectedId={null} onSelectCharacter={() => {}} />)
 
-    await waitFor(() => expect(screen.getByText(/no characters match/i)).toBeInTheDocument())
+    expect(await screen.findByText(/no characters match/i)).toBeInTheDocument()
   })
 
   it('renders an error state when the request fails', async () => {
@@ -58,6 +58,6 @@ describe('CharacterListPanel', () => {
 
     render(<CharacterListPanel query="" selectedId={null} onSelectCharacter={() => {}} />)
 
-    await waitFor(() => expect(screen.getByRole('alert')).toBeInTheDocument())
+    expect(await screen.findByRole('alert')).toBeInTheDocument()
   })
 })

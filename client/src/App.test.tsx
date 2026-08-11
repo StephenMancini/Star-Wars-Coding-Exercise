@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 import { describe, expect, it } from 'vitest'
@@ -39,14 +39,12 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
+    expect(await screen.findByText('Luke Skywalker')).toBeInTheDocument()
     expect(screen.getByText(/select a character/i)).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Luke Skywalker' }))
 
-    await waitFor(() =>
-      expect(screen.getByRole('heading', { name: 'Luke Skywalker' })).toBeInTheDocument(),
-    )
+    expect(await screen.findByRole('heading', { name: 'Luke Skywalker' })).toBeInTheDocument()
     expect(screen.getByText('172')).toBeInTheDocument()
   })
 
@@ -62,7 +60,7 @@ describe('App', () => {
 
     render(<App />)
 
-    await waitFor(() => expect(screen.getByText('Luke Skywalker')).toBeInTheDocument())
+    expect(await screen.findByText('Luke Skywalker')).toBeInTheDocument()
     expect(screen.getByText('Leia Organa')).toBeInTheDocument()
 
     await user.type(screen.getByRole('searchbox'), 'Leia')
